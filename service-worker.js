@@ -1,4 +1,4 @@
-const CACHE_NAME = "nihongo-v5";
+const CACHE_NAME = "nihongo-v6";
 
 const FILES = [
   "./",
@@ -27,3 +27,4 @@ self.addEventListener("fetch", e => {
     fetch(e.request).catch(() => caches.match(e.request))
   );
 });
+
