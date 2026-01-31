@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Japanese N5 Trainer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body {
+    font-family: Inter, system-ui, sans-serif;
+    margin: 0;
+    background: #f4f6fa;
+}
+
+header {
+    background: #111;
+    color: #fff;
+    padding: 16px;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.jp {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+}
+
+.option {
+    display: block;
+    margin-top: 8px;
+}
+
+.correct { color: green; font-weight: bold; }
+.wrong { color: red; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🇯🇵 Japanese N5 Trainer</h1>
+<p>JLPT-style Practice • Audio • Offline</p>
+</header>
+
+<div class="container">
+
+<!-- Vocabulary with Audio -->
+<div class="card">
+<h2>🔊 Vocabulary (Tap to Hear)</h2>
+
+<p class="jp">これをください 
+<button onclick="speak('これをください')">▶</button></p>
+<p>kore o kudasai → Please give me this</p>
+
+<p class="jp">わたしはがくせいです
+<button onclick="speak('わたしはがくせいです')">▶</button></p>
+<p>watashi wa gakusei desu → I am a student</p>
+</div>
+
+<!-- JLPT MCQ -->
+<div class="card">
+<h2>📝 JLPT N5 – MCQ</h2>
+<p><b>Q:</b> Choose the correct meaning:</p>
+<p class="jp">すみません</p>
+
+<label class="option"><input type="radio" name="q1" onclick="checkMCQ(true)"> Excuse me / Sorry</label>
+<label class="option"><input type="radio" name="q1" onclick="checkMCQ(false)"> Thank you</label>
+<label class="option"><input type="radio" name="q1" onclick="checkMCQ(false)"> Goodbye</label>
+
+<p id="mcqResult"></p>
+</div>
+
+<!-- Sentence Formation -->
+<div class="card">
+<h2>✍️ Sentence Formation</h2>
+<p>Arrange mentally:</p>
+<p class="jp">[ わたしは / ラーメン / すきです ]</p>
+
+<button onclick="showAnswer()">Show Answer</button>
+<p id="sentenceAnswer"></p>
+</div>
+
+<!-- Translation -->
+<div class="card">
+<h2>🌐 Translation</h2>
+<p>Translate into Japanese:</p>
+<p><b>“This is my bread.”</b></p>
+
+<button onclick="showTranslation()">Show Answer</button>
+<p id="translation"></p>
+</div>
+
+</div>
+
+<script>
+// Text to Speech
+function speak(text) {
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = "ja-JP";
+    speechSynthesis.speak(msg);
+}
+
+// MCQ
+function checkMCQ(correct) {
+    document.getElementById("mcqResult").innerHTML =
+        correct ? "<span class='correct'>Correct ✔</span>" :
+                  "<span class='wrong'>Wrong ✖</span>";
+}
+
+// Answers
+function showAnswer() {
+    document.getElementById("sentenceAnswer").innerText =
+        "わたしはラーメンがすきです";
+}
+
+function showTranslation() {
+    document.getElementById("translation").innerText =
+        "これはわたしのパンです";
+}
+
+// Service Worker
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>
